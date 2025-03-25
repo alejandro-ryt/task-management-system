@@ -1,0 +1,26 @@
+{
+  "name": "task-management-system",
+  "version": "1.0.0",
+  "description": "Implement all the topics that have covered of typescript with minimum (3 - 4) examples of each Then make a task manager and store data in file using fs module (Try to use class in this)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"lite-server --config=bs-config.json\" \"sass --watch ./public/styles/styles.scss ./public/styles/styles.css\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejandro-ryt/task-management-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alejandro-ryt/task-management-system/issues"
+  },
+  "homepage": "https://github.com/alejandro-ryt/task-management-system#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "lite-server": "^2.6.1",
+    "typescript": "^5.8.2"
+  }
+}
