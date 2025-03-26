@@ -1,10 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import TaskModel from "../models/TaskModel";
-// import ResponseController from "../controllers/ResponseMessageController"
 
 export default class TaskController {
-    // private responseController = new ResponseController()
-
     // Tasks array
     private tasks = JSON.parse(localStorage.getItem("tasks") || "[]") as TaskModel[];
     // Modal with task inputs
@@ -56,22 +53,22 @@ export default class TaskController {
 
     renderSingleCard(id: string, title: string, deadline: Date, label: string, status: "toDo" | "inProgress" | "done") {
         const task = new TaskModel(id, title, deadline, label, status);
-        const toDoTasksContainer = document.getElementById("toDoTasks") as HTMLInputElement;
-        const inProgressTasksContainer = document.getElementById("inProgressTasks") as HTMLInputElement;
-        const doneTasksContainer = document.getElementById("doneTasks") as HTMLInputElement;
+        const toDoTasksContainer = document.getElementById("toDoTasks") as HTMLDivElement;
+        const inProgressTasksContainer = document.getElementById("inProgressTasks") as HTMLDivElement;
+        const doneTasksContainer = document.getElementById("doneTasks") as HTMLDivElement;
 
         switch (task.status) {
             case "toDo":
-                toDoTasksContainer.appendChild(this.createCard(id, title, deadline, label));
+                toDoTasksContainer.prepend(this.createCard(id, title, deadline, label));
                 break;
             case "inProgress":
-                inProgressTasksContainer.appendChild(this.createCard(id, title, deadline, label));
+                inProgressTasksContainer.prepend(this.createCard(id, title, deadline, label));
                 break;
             case "done":
-                doneTasksContainer.appendChild(this.createCard(id, title, deadline, label));
+                doneTasksContainer.prepend(this.createCard(id, title, deadline, label));
                 break;
             default:
-                toDoTasksContainer.appendChild(this.createCard(id, title, deadline, label));
+                toDoTasksContainer.prepend(this.createCard(id, title, deadline, label));
                 break;
         }
     }
@@ -85,37 +82,19 @@ export default class TaskController {
     addTask(title: string, deadline: Date, label: string, status: "toDo" | "inProgress" | "done") {
         let id = uuidv4();
         const newTask = new TaskModel(id, title, deadline, label, status);
-
-        const submitButton = document.getElementById("submitButton");
-        if (submitButton) {
-            submitButton.addEventListener("click", (event) => {
-                if (submitButton.dataset.submitType === "add") {
-                    // Prevent the default form submission
-                    event.preventDefault();
-                    // Updating tasks array
-                    this.tasks.push(newTask);
-                    // Removing previous localStorage
-                    localStorage.removeItem("tasks");
-                    // Updating localStorage
-                    localStorage.setItem("tasks", JSON.stringify(this.tasks));
-                    // Rendering the card
-                    this.renderSingleCard(id, title, deadline, label, status);
-
-                    // Close the modal
-                    if (this.modal) {
-                        this.modal.style.display = "none";
-                    }
-                    // Clear the task form inputs
-                    if (this.taskForm) {
-                        (this.taskForm as HTMLFormElement).reset();
-                    }
-                }
-            });
-        }
+        // Updating tasks array
+        this.tasks.push(newTask);
+        // Removing previous localStorage
+        localStorage.removeItem("tasks");
+        // Updating localStorage
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+        // Rendering the card
+        this.renderSingleCard(id, title, deadline, label, status);
     }
 
     editTask(id: string) {
-        const submitButton = document.getElementById("submitButton");
+        const oldCard = document.getElementById(id)
+        const submitButton = document.getElementById("submitButton") as HTMLButtonElement;
         if (submitButton) {
             // Setting dataset of the submit button to avoid double execution of event listener
             submitButton.dataset.submitType = "edit";
@@ -129,13 +108,13 @@ export default class TaskController {
                 // Form Inputs elements
                 const taskTitle = document.getElementById("taskTitle") as HTMLInputElement;
                 const taskDeadline = document.getElementById("taskDeadline") as HTMLInputElement;
-                const taskStatus = document.getElementById("taskStatus") as HTMLSelectElement;
                 const taskLabel = document.getElementById("taskLabel") as HTMLInputElement;
+                const taskStatus = document.getElementById("taskStatus") as HTMLSelectElement;
 
                 // Finding and updating values of the inputs
                 const taskToEdit = this.tasks.findIndex((task: TaskModel) => task.id === id);
                 taskTitle.value = this.tasks[taskToEdit].title;
-                taskDeadline.value = this.tasks[taskToEdit].deadline.toISOString().split("T")[0];
+                taskDeadline.value = new Date(this.tasks[taskToEdit].deadline).toDateString();
                 taskStatus.value = this.tasks[taskToEdit].status;
                 taskLabel.value = this.tasks[taskToEdit].label;
 
@@ -149,27 +128,29 @@ export default class TaskController {
                         this.tasks[taskToEdit].deadline = new Date(taskDeadline.value);
                         this.tasks[taskToEdit].status = taskStatus.value as "toDo" | "inProgress" | "done";
                         this.tasks[taskToEdit].label = taskLabel.value;
+
+                        // Save updated tasks back to localStorage
+                        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+
+                        // Remove the old card element from the DOM
+                        oldCard?.remove()
+
+                        // Render the new updated task card
+                        const { id, title, deadline, label, status } = this.tasks[taskToEdit];
+                        this.renderSingleCard(id, title, deadline, label, status);
+                        // Close the modal
+                        if (this.modal) {
+                            this.modal.style.display = "none";
+                        }
                     };
-
-                    // Save updated tasks back to localStorage
-                    localStorage.setItem("tasks", JSON.stringify(this.tasks));
-
-                    // Remove the old card element from the DOM
-                    // this.taskCard.remove()
-
-                    // Render the new updated task card
-                    const { id, title, deadline, label, status } = this.tasks[taskToEdit];
-                    this.renderSingleCard(id, title, deadline, label, status);
-                    // Close the modal
-                    if (this.modal) {
-                        this.modal.style.display = "none";
-                    }
                 }
             }
         }
     }
 
     deleteTask(id: string) {
+        const elementToRemove = document.getElementById(id)
+
         // Get the index of the task we want to remove
         const taskIndex = this.tasks.findIndex((task) => task.id === id);
 
@@ -180,6 +161,6 @@ export default class TaskController {
         localStorage.setItem("tasks", JSON.stringify(this.tasks));
 
         // Remove the card element from the DOM
-        // this.taskCard.remove()
+        elementToRemove?.remove()
     }
 }

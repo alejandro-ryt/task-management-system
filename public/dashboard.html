@@ -33,7 +33,7 @@
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     />
     <title>Task Management System</title>
-    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/style.min.css" />
     <script type="module" async src="../src/app.ts"></script>
     <script type="module" async src="../src/views/TaskView.ts"></script>
   </head>
@@ -90,19 +90,19 @@
       <main class="dashboardMain dashboardBackground">
         <!-- Tasks Section-->
         <section class="tasksColumnsContainer">
-          <div id="toDoTasks" class="tasksColumn">
-            <h2>
-              To Do
-              <button id="addTask" class="addTaskButton"></button>
-            </h2>
+          <div class="tasksColumn">
+            <h2>To Do<button id="addTask" class="addTaskButton"></button></h2>
+            <div id="toDoTasks"></div>
           </div>
 
-          <div id="inProgressTasks" class="tasksColumn">
+          <div class="tasksColumn">
             <h2>In Progress</h2>
+            <div id="inProgressTasks"></div>
           </div>
 
-          <div id="doneTasks" class="tasksColumn">
+          <div class="tasksColumn">
             <h2>Done</h2>
+            <div id="doneTasks"></div>
           </div>
         </section>
       </main>
