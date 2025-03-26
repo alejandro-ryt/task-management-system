@@ -1,11 +1,11 @@
 export default class TaskModel {
     id: string;
     title: string;
-    deadline: Date;
+    deadline: string;
     label: string;
     status: "toDo" | "inProgress" | "done" = "toDo";
 
-    constructor(id: string, title: string, deadline: Date, label: string, status: "toDo" | "inProgress" | "done") {
+    constructor(id: string, title: string, deadline: string, label: string, status: "toDo" | "inProgress" | "done") {
         this.id = id;
         this.title = title;
         this.deadline = deadline;

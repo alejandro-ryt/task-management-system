@@ -9,7 +9,7 @@ export default class TaskController {
     // Tasks Form
     private taskForm = document.getElementById("taskForm");
 
-    createCard(id: string, title: string, deadline: Date, label: string) {
+    createCard(id: string, title: string, deadline: string, label: string) {
         // Defining HTML Strucuture
         const card = document.createElement("article");
         card.id = id;
@@ -51,7 +51,7 @@ export default class TaskController {
         return card;
     }
 
-    renderSingleCard(id: string, title: string, deadline: Date, label: string, status: "toDo" | "inProgress" | "done") {
+    renderSingleCard(id: string, title: string, deadline: string, label: string, status: "toDo" | "inProgress" | "done") {
         const task = new TaskModel(id, title, deadline, label, status);
         const toDoTasksContainer = document.getElementById("toDoTasks") as HTMLDivElement;
         const inProgressTasksContainer = document.getElementById("inProgressTasks") as HTMLDivElement;
@@ -79,7 +79,7 @@ export default class TaskController {
         });
     }
 
-    addTask(title: string, deadline: Date, label: string, status: "toDo" | "inProgress" | "done") {
+    addTask(title: string, deadline: string, label: string, status: "toDo" | "inProgress" | "done") {
         let id = uuidv4();
         const newTask = new TaskModel(id, title, deadline, label, status);
         // Updating tasks array
@@ -114,7 +114,7 @@ export default class TaskController {
                 // Finding and updating values of the inputs
                 const taskToEdit = this.tasks.findIndex((task: TaskModel) => task.id === id);
                 taskTitle.value = this.tasks[taskToEdit].title;
-                taskDeadline.value = new Date(this.tasks[taskToEdit].deadline).toDateString();
+                taskDeadline.value = new Date(this.tasks[taskToEdit].deadline).toISOString().split("T")[0];
                 taskStatus.value = this.tasks[taskToEdit].status;
                 taskLabel.value = this.tasks[taskToEdit].label;
 
@@ -125,7 +125,7 @@ export default class TaskController {
 
                         // Update task object with new values from inputs
                         this.tasks[taskToEdit].title = taskTitle.value;
-                        this.tasks[taskToEdit].deadline = new Date(taskDeadline.value);
+                        this.tasks[taskToEdit].deadline = taskDeadline.value;
                         this.tasks[taskToEdit].status = taskStatus.value as "toDo" | "inProgress" | "done";
                         this.tasks[taskToEdit].label = taskLabel.value;
 

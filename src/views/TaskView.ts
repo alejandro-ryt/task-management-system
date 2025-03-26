@@ -9,7 +9,7 @@ class TaskView {
         this.taskController.renderExistingTaskCards();
     }
 
-    createTask(title: string, deadline: Date, label: string, status: "toDo" | "inProgress" | "done") {
+    createTask(title: string, deadline: string, label: string, status: "toDo" | "inProgress" | "done") {
         this.taskController.addTask(title, deadline, label, status);
     }
 }
@@ -63,12 +63,12 @@ addTaskButton.addEventListener("click", () => {
                     
                     const { title, deadline, label, status } = {
                         title: formData.title as string,
-                        deadline: new Date(formData.deadline as string),
+                        deadline: formData.deadline as string,
                         label: formData.label as string,
                         status: formData.status as "toDo" | "inProgress" | "done",
                     };
 
-                    taskView.createTask(title, new Date(deadline), label, status);
+                    taskView.createTask(title, deadline, label, status);
 
                     // Close the modal
                     if (modal) {
