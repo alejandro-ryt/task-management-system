@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Task Management System is a web application that allows users to create, update, and delete tasks."
+    />
+    <meta
+      name="keywords"
+      content="Task Management System, Task Management, Task, Management, System"
+    />
+    <meta name="author" content="RYT" />
+    <meta property="og:title" content="Task Management System" />
+    <meta
+      property="og:description"
+      content="Task Management System is a web application that allows users to create, update, and delete tasks."
+    />
+    <meta
+      property="og:image"
+      content="https://images.pexels.com/photos/691668/pexels-photo-691668.jpeg?auto=compress&cs=tinysrgb&w=5472&h=3648&dpr=4"
+    />
+    <title>Task Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+    />
+    <title>Task Management System</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <script type="module" async src="../src/app.ts"></script>
+    <script type="module" async src="../src/views/TaskView.ts"></script>
+  </head>
+
+  <body>
+    <div class="dashboardContainer">
+      <header class="dashboardHeader dashboardBackground">
+        <h1>Loggie</h1>
+        <button id="logout" class="logoutButton">Sign out</button>
+      </header>
+
+      <div id="modal">
+        <div class="container">
+          <button id="closeModal"></button>
+          <h1>Create new task</h1>
+          <p>Please provide the necessary information to create your task!</p>
+          <form id="taskForm">
+            <label for="taskTitle">Title</label>
+            <input
+              id="taskTitle"
+              placeholder="Create an awesome page!"
+              name="title"
+              type="text"
+              required
+            />
+
+            <label for="taskDeadline">Deadline</label>
+            <input id="taskDeadline" name="deadline" type="date" required />
+
+            <label for="taskLabel">Label</label>
+            <input
+              id="taskLabel"
+              placeholder="Urgent!"
+              name="label"
+              type="text"
+              required
+            />
+
+            <label for="taskLabel">Status</label>
+            <select name="status" id="taskStatus" required>
+              <option value="toDo">To Do</option>
+              <option value="inProgress">In Progress</option>
+              <option value="done">Completed</option>
+            </select>
+
+            <p class="infoText"></p>
+            <button id="submitButton" data-submit-type="" type="submit">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <main class="dashboardMain dashboardBackground">
+        <!-- Tasks Section-->
+        <section class="tasksColumnsContainer">
+          <div id="toDoTasks" class="tasksColumn">
+            <h2>
+              To Do
+              <button id="addTask" class="addTaskButton"></button>
+            </h2>
+          </div>
+
+          <div id="inProgressTasks" class="tasksColumn">
+            <h2>In Progress</h2>
+          </div>
+
+          <div id="doneTasks" class="tasksColumn">
+            <h2>Done</h2>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      // Logout function
+      function logout() {
+        localStorage.removeItem("activeUser");
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>

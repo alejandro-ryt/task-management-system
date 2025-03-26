@@ -1,0 +1,60 @@
+{
+    "tasks": [
+        {
+            "id": "1",
+            "title": "Create tasks",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "2",
+            "title": "Update tasks",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "3",
+            "title": "Delete tasks",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "4",
+            "title": "Categorize tasks",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "5",
+            "title": "Set task priorities and deadlines",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "6",
+            "title": "Persist data using LocalStorage",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "7",
+            "title": "Export and import tasks via a JSON file (File Handling)",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        },
+        {
+            "id": "8",
+            "title": "Implement authentication using a LocalStorage-based login system",
+            "deadline": "2025-03-23",
+            "label": "Completed",
+            "status": "done"
+        }
+    ]
+}

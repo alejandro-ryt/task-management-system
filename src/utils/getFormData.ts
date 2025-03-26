@@ -2,12 +2,11 @@ interface FormDataObject {
     [key: string]: FormDataEntryValue;
 }
 
-export function getFormData(formId: string): FormDataObject {
-    const form = document.getElementById(formId) as HTMLFormElement;
+export function getFormData(form: HTMLFormElement): FormDataObject {
     const formData = new FormData(form);
-    const data: FormDataObject = {};
-    for (let [key, value] of formData.entries()) {
-        data[key] = value;
-    }
+    const data: Record<string, FormDataEntryValue> = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
     return data;
 }
